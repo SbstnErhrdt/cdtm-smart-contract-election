@@ -1,10 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav
+  class="navbar navbar-expand-lg navbar navbar-dark bg-dark"
+  style="background-color: #E30A17 !important"
+>
+  <h1 style="color: white; margin: 0px 20px">eVote</h1>
   <a class="navbar-brand" [routerLink]="['/']">Election</a>
 </nav>
 
 <router-outlet></router-outlet>
 
-
-
-<a class="navbar-brand" [routerLink]="['/']">Home</a>
-<a class="navbar-brand" [routerLink]="['/admin']">Admin</a>
+<div class="container-fluid">
+  <div class="row">
+    <div class="footer">
+      <div class="footer-inside display: inline">
+        <a class="navbar-brand" [routerLink]="['/']">Home</a>
+        <a class="navbar-brand" [routerLink]="['/admin']">Admin</a>
+        <p>Impressum</p>
+      </div>
+    </div>
+  </div>
+</div>
