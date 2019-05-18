@@ -8,10 +8,13 @@ import { Web3Service } from 'src/util/web3.service';
 })
 export class VoteComponent implements OnInit {
 
-  constructor(private web3Service: Web3Service, ) { }
+  constructor(private web3Service: Web3Service) { }
 
   ngOnInit() {
-    console.log('Constructor: ' + web3Service);
+    console.log('Constructor: ' + this.web3Service);
+    console.log('Constructor: ' + this.web3Service.ready);
+    console.log('Constructor: ' + this.web3Service.accountsObservable);
+    console.log(this.web3Service.accountsObservable[0]);
   }
 
 }

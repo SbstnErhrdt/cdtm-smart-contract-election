@@ -12,6 +12,7 @@ import { UserComponent } from './user/user.component';
 import { VoteComponent } from './user/vote/vote.component';
 import { ConfirmComponent } from './user/confirm/confirm.component';
 import { LoginComponent } from './login/login.component';
+import { Web3Service } from 'src/util/web3.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    Web3Service,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

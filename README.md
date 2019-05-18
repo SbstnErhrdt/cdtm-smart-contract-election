@@ -46,3 +46,12 @@ Visit this URL in your browser: http://localhost:3000
 
 If you get stuck, please reference the free video tutorial.
 
+
+
+
+# Python
+
+```
+npm config set python /usr/bin/python2.7
+
+```
