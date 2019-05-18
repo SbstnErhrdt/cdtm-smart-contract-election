@@ -26,7 +26,7 @@ contract Election {
     mapping(address => PollingStation) public address2pollingStation;
 
     // hash2candidateID
-    mapping(string => uint) public hash2candidateId;
+    mapping(bytes24 => uint) public hash2candidateId;
 
     // Store Candidates Count
     uint public candidatesCount;
@@ -37,7 +37,7 @@ contract Election {
     // voted event
     event votedEvent (
         uint indexed _candidateId,
-        string indexed _rand
+        bytes24 indexed _hash
     );
 
     // Constructor
@@ -98,8 +98,24 @@ contract Election {
         address2pollingStation[msg.sender] = id2pollingStations[_stationID];
     }
 
-    function getVote(string memory _hash) public {
-        //address2pollingStation[msg.sender] = id2pollingStations[_stationID];
+    function getStation(uint _id) public view returns(uint id, string memory name) {
+        PollingStation memory station;
+        station = id2pollingStations[_id];
+        id = _id;
+        name = station.name;
+    }
+
+    function getCandidate(uint _id) public view returns(uint id, string memory name, string memory party){
+        Candidate memory candidate;
+        candidate = id2candidates[_id];
+        id = _id;
+        name = candidate.name;
+        party = candidate.party;
+    }
+
+    function getVoteCandidate(bytes24 _hash) public view returns(uint id, string memory name, string memory party){
+        uint candidateId = hash2candidateId[_hash];
+        (id, name, party) = getCandidate(candidateId);
     }
 
     // TODO
@@ -108,7 +124,7 @@ contract Election {
     //}
 
     // Execute the vote
-    function vote (uint _candidateId, string memory _rand) public {
+    function vote (uint _candidateId, bytes24 _hash) public {
         // require that they haven't voted before
         // require(voters[msg.sender]==false);
 
@@ -122,12 +138,12 @@ contract Election {
         require(station.voteCount < station.amountOfEligibleVoters, "The amount of votes exeed the max votes");
 
         // record that voter has voted for a candidate
-        hash2candidateId[_rand] = _candidateId;
+        hash2candidateId[_hash] = _candidateId;
 
         // update candidate vote Count
         id2candidates[_candidateId].voteCount ++;
 
         // trigger voted event
-        emit votedEvent(_candidateId, _rand);
+        emit votedEvent(_candidateId, _hash);
     }
 }
