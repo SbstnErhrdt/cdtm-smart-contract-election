@@ -35,7 +35,7 @@ export class VoteComponent implements OnInit {
             console.log(deployed);
             deployed.candidatesCount.call().then((candidatesCount) => {
               const result = candidatesCount.toNumber();
-              this.loadCandiates(result)
+              this.loadCandiates(result);
             });
           });
       });

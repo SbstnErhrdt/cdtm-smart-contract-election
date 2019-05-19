@@ -16,12 +16,25 @@ export class CheckComponent implements OnInit {
 
   candidate = null;
 
-  vote : any;
+  vote: any;
 
-  constructor(private route:ActivatedRoute,private web3Service: Web3Service) {}
+  c = {
+    id: 1,
+    name: 'Ekrem Imamoglu',
+    party: 'CHP',
+  };
+
+  constructor(private route: ActivatedRoute, private web3Service: Web3Service) { }
 
   ngOnInit() {
+    this.run();
+  }
+
+  run() {
     const hash = this.route.snapshot.params['hash'];
+    console.log(hash);
+
+
 
     const that = this;
 
@@ -30,8 +43,16 @@ export class CheckComponent implements OnInit {
         this.Election = ElectionAbstraction;
         this.Election.deployed()
           .then(deployed => {
-            console.log(deployed);
-            deployed.getVoteCandidate(that.web3Service.web3.utils.fromAscii(hash)).then((candidate) => {
+            console.log('dep', deployed);
+            const hashEncoded = this.web3Service.web3.utils.fromAscii(hash);
+            console.log("lalala", hashEncoded);
+
+            ////deployed.hash2candidateId.call().then((res) => {
+            //  console.log(res);
+            //});
+
+            deployed.getVoteCandidate(hashEncoded).then((candidate) => {
+              console.log("aaa",candidate)
               // append the candidates
               this.candidate = {
                 id: candidate[0].toNumber(),
@@ -39,6 +60,8 @@ export class CheckComponent implements OnInit {
                 party: candidate[2],
               };
             });
+            
+            
           });
       });
   }
