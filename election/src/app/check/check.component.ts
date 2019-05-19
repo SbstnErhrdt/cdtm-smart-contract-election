@@ -14,6 +14,8 @@ export class CheckComponent implements OnInit {
 
   Election: any;
 
+  candidate = null;
+
   vote : any;
 
   constructor(private route:ActivatedRoute,private web3Service: Web3Service) {}
@@ -21,15 +23,21 @@ export class CheckComponent implements OnInit {
   ngOnInit() {
     const hash = this.route.snapshot.params['hash'];
 
+    const that = this;
+
     this.web3Service.artifactsToContract(election_artifacts)
       .then((ElectionAbstraction) => {
         this.Election = ElectionAbstraction;
         this.Election.deployed()
           .then(deployed => {
             console.log(deployed);
-            deployed.getVoteCandidate.().then((candidatesCount) => {
-              const result = candidatesCount.toNumber();
-              this.loadVote(result);
+            deployed.getVoteCandidate(that.web3Service.web3.utils.fromAscii(hash)).then((candidate) => {
+              // append the candidates
+              this.candidate = {
+                id: candidate[0].toNumber(),
+                name: candidate[1],
+                party: candidate[2],
+              };
             });
           });
       });
