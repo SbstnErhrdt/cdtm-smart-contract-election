@@ -1,0 +1,20 @@
+<nav
+  class="navbar navbar-expand-lg navbar navbar-dark bg-dark"
+  style="background-color: #D12F27 !important"
+>
+
+  <a class="navbar-brand" [routerLink]="['/']">Istanbul Election</a>
+  <img style="position:absolute; right:10px; top:0;" src="/assets/logo.png" height="45px" />
+</nav>
+
+<router-outlet></router-outlet>
+
+
+<div class="container-fluid" style="margin-top:50px; padding: 20px; border-top:1px solid #eee;">
+    <div class="footer">
+      <div class="footer-inside display: inline; text-align:center; font-size:13px;">
+        <a class="navbar-brand" style="font-size:14px;" [routerLink]="['/']">Home</a>
+        <a class="navbar-brand" style="font-size:14px;" [routerLink]="['/admin']">Admin</a>
+      </div>
+    </div>
+</div>

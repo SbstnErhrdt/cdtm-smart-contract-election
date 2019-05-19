@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Select the election station</h1>
+      <h2 *ngIf="currentStation">Current: {{currentStation}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let station of stations">
+      <div class="card electoral-card" style="width: 18rem;">
+        <img
+          class="card-img-top electoral-image"
+          src="{{images[station.id]}}"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{station.name}}</h5>
+          <p class="card-text">Electoral: {{station.amountOfEligibleVoters}}</p>
+          <button class="btn btn-primary" 
+          (click)="selectStation(station.id, station)"
+            >Select Station</button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

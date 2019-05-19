@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Istanbul Election</h1>
+  <p class="lead">Election Station: <strong>{{currentStation}}</strong></p>
+  <form>
+    <div class="form-group">
+      <label for="username">Please type in your security token</label>
+      <input
+        type="text"
+        class="form-control"
+        id="security"
+        placeholder="wad324saf"
+        [(ngModel)]="security"
+        name="security"
+      />
+      <!-- <small id="emailHelp" class="form-text text-muted"
+        >We'll never share your email with anyone else.</small
+      > -->
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="authenticate()">
+      Submit
+    </button>
+  </form>
+</div>
