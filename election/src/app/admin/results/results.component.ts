@@ -3,6 +3,7 @@ import { Web3Service } from 'src/util/web3.service';
 import { ChartType, ChartOptions } from "chart.js";
 import { Label } from "ng2-charts";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
+import { Router } from '@angular/router';
 
 declare let require: any;
 const election_artifacts = require('../../../../build/contracts/Election.json');
@@ -13,14 +14,8 @@ const election_artifacts = require('../../../../build/contracts/Election.json');
   styleUrls: ["./results.component.scss"],
 })
 export class ResultsComponent implements OnInit {
-  candidates = ["Simon", "Sebastian"];
-  results = [300, 500];
-
-  Election: any;
-
-  account = null;
-
-  stations = null;
+  candidates_list = [];
+  results = [];
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -36,7 +31,7 @@ export class ResultsComponent implements OnInit {
       },
     },
   };
-  public pieChartLabels: Label[] = this.candidates;
+  public pieChartLabels: Label[] = this.candidates_list;
   public pieChartData: number[] = this.results;
   public pieChartType: ChartType = "pie";
   public pieChartLegend = true;
@@ -47,7 +42,15 @@ export class ResultsComponent implements OnInit {
     },
   ];
 
-  constructor(private web3Service: Web3Service) {
+  Election: any;
+
+  account = null;
+
+  candidates = null;
+
+  result = null;
+
+  constructor(private web3Service: Web3Service, private router: Router) {
 
   }
 
@@ -58,16 +61,16 @@ export class ResultsComponent implements OnInit {
         this.Election.deployed()
           .then(deployed => {
             console.log(deployed);
-            deployed.pollingStationsCount.call().then((stationsCount) => {
-              const result = stationsCount.toNumber();
-              this.loadStations(result);
+            deployed.candidatesCount.call().then((candidatesCount) => {
+              const result = candidatesCount.toNumber();
+              this.loadCandiates(result);
             });
           });
       });
   }
 
-  loadStations(candidatesCount) {
-    this.stations = [];
+  loadCandiates(candidatesCount) {
+    this.candidates = [];
 
     this.web3Service.artifactsToContract(election_artifacts)
       .then((ElectionAbstraction) => {
@@ -75,13 +78,16 @@ export class ResultsComponent implements OnInit {
         this.Election.deployed()
           .then(deployed => {
             for (var i = 1; i <= candidatesCount; i++) {
-              deployed.getStation(i).then((station) => {
+              deployed.getCandidateVotes(i).then((candidate) => {
                 // append the candidates
-                this.stations.push({
-                  id: station[0].toNumber(),
-                  name: station[1],
-                  amountOfEligibleVoters: station[2].toNumber(),
+                this.candidates.push({
+                  id: candidate[0].toNumber(),
+                  name: candidate[1],
+                  party: candidate[2],
+                  votes: candidate[3].toNumber(),
                 })
+                this.candidates_list.push(candidate[1]);
+                this.results.push(candidate[3].toNumber());
               });
             }
           });

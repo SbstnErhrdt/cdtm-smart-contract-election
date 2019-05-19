@@ -114,6 +114,15 @@ contract Election {
         party = candidate.party;
     }
 
+    function getCandidateVotes(uint _id) public view returns(uint id, string memory name, string memory party, uint voteCount){
+        Candidate memory candidate;
+        candidate = id2candidates[_id];
+        id = _id;
+        name = candidate.name;
+        party = candidate.party;
+        voteCount = candidate.voteCount;
+    }
+
     function getVoteCandidate(bytes24 _hash) public view returns(uint id, string memory name, string memory party){
         uint candidateId = hash2candidateId[_hash];
         (id, name, party) = getCandidate(candidateId);
