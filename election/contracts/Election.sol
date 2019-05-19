@@ -26,10 +26,17 @@ contract Election {
     mapping(address => PollingStation) public address2pollingStation;
 
     // hash2candidateID
-    mapping(bytes24 => uint) public hash2candidateId;
+    mapping(bytes32 => uint) public hash2candidateId;
 
     // Store Candidates Count
     uint public candidatesCount;
+
+
+    function getCandidatesCount() public view returns(uint) {
+        return candidatesCount;
+    }
+
+
 
     // Store Stations Count
     uint public id2pollingStationsCount;
@@ -37,7 +44,7 @@ contract Election {
     // voted event
     event votedEvent (
         uint indexed _candidateId,
-        bytes24 indexed _hash
+        bytes32 indexed _hash
     );
 
     // Constructor
@@ -124,7 +131,7 @@ contract Election {
     //}
 
     // Execute the vote
-    function vote (uint _candidateId, bytes24 _hash) public {
+    function vote (uint _candidateId, bytes32 _hash) public {
         // require that they haven't voted before
         // require(voters[msg.sender]==false);
 
