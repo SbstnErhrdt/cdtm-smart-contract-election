@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,8 @@ import { VoteComponent } from './user/vote/vote.component';
 import { ConfirmComponent } from './user/confirm/confirm.component';
 import { LoginComponent } from './login/login.component';
 import { Web3Service } from 'src/util/web3.service';
+import { QRCodeModule } from 'angularx-qrcode';
+import { CheckComponent } from './check/check.component';
 
 @NgModule({
   declarations: [
@@ -25,15 +28,18 @@ import { Web3Service } from 'src/util/web3.service';
     UserComponent,
     VoteComponent,
     ConfirmComponent,
-    LoginComponent
+    LoginComponent,
+    CheckComponent,
   ],
+
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    QRCodeModule,
+    FormsModule],
   providers: [
     Web3Service,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

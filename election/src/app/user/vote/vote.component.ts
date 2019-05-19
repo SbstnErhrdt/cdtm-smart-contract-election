@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3Service } from 'src/util/web3.service';
+import { Router } from '@angular/router';
 
 declare let require: any;
 const election_artifacts = require('../../../../build/contracts/Election.json');
@@ -11,13 +12,17 @@ const election_artifacts = require('../../../../build/contracts/Election.json');
 })
 export class VoteComponent implements OnInit {
 
+  ENDPOINT = "http://localhost:4200/check/";
+
   Election: any;
-  
+
   account = null;
 
   candidates = null;
 
-  constructor(private web3Service: Web3Service) { 
+  result = null;
+
+  constructor(private web3Service: Web3Service, private router: Router) {
 
   }
 
@@ -63,7 +68,8 @@ export class VoteComponent implements OnInit {
   }
 
 
-  vote(id) {
+  vote(id, candidate) {
+    this.result = null;
     let r = this.generateRandom();
     console.log(this.web3Service.web3.utils.fromAscii(r));
     let that = this;
@@ -72,12 +78,22 @@ export class VoteComponent implements OnInit {
         ElectionAbstraction.deployed().then(function (instance) {
           return instance.vote(id, that.web3Service.web3.utils.fromAscii(r), { from: localStorage.getItem('account') });
         }).then(function (result) {
-          console.log(result)
-          // Wait for votes to update
+          console.log('RES', result);
+          if (result) {
+            that.result = {};
+            that.result['candidate'] = candidate;
+            that.result['hash'] = that.ENDPOINT + r;
+          }
         }).catch(function (err) {
           console.error(err);
+          alert(err);
         });
       });
+  }
+
+  nextVote() {
+    this.result = {};
+    this.router.navigate(["/"]);
   }
 
 

@@ -31,15 +31,8 @@ contract Election {
     // Store Candidates Count
     uint public candidatesCount;
 
-
-    function getCandidatesCount() public view returns(uint) {
-        return candidatesCount;
-    }
-
-
-
     // Store Stations Count
-    uint public id2pollingStationsCount;
+    uint public pollingStationsCount;
 
     // voted event
     event votedEvent (
@@ -89,14 +82,14 @@ contract Election {
 
     // Add a polling station to the election
     function addStation (string memory _name, uint _amountOfEligibleVoters) private {
-        id2pollingStationsCount ++;
+        pollingStationsCount ++;
         PollingStation memory station;
         station.id = candidatesCount;
         station.name = _name;
         station.amountOfEligibleVoters = _amountOfEligibleVoters;
         station.voteCount = 0;
         // Add the polling stations to the mapping
-        id2pollingStations[id2pollingStationsCount] = station;
+        id2pollingStations[pollingStationsCount] = station;
     }
 
     // Add a polling station to the election
@@ -105,11 +98,12 @@ contract Election {
         address2pollingStation[msg.sender] = id2pollingStations[_stationID];
     }
 
-    function getStation(uint _id) public view returns(uint id, string memory name) {
+    function getStation(uint _id) public view returns(uint id, string memory name, uint amountOfEligibleVoters) {
         PollingStation memory station;
         station = id2pollingStations[_id];
         id = _id;
         name = station.name;
+        amountOfEligibleVoters = station.amountOfEligibleVoters;
     }
 
     function getCandidate(uint _id) public view returns(uint id, string memory name, string memory party){
