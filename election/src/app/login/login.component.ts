@@ -14,11 +14,16 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (localStorage.getItem("authenticated") === "true")
+      this.router.navigate(["/user"]);
+  }
 
   authenticate() {
-    if (this.users[this.username] === this.password)
+    if (this.users[this.username] === this.password) {
+      console.log("here");
+      localStorage.setItem("authenticated", "true");
       this.router.navigate(["/user"]);
-    else alert("Good guess, but ... No!");
+    } else alert("Good guess, but ... No!");
   }
 }
