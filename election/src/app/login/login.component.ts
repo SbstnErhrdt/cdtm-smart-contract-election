@@ -7,21 +7,29 @@ import { Router } from "@angular/router";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  users = { user1: "password1" };
+  users = { 
+    a1: true, 
+    b2: true, 
+    c3: true, 
+  };
 
-  username = "";
-  password = "";
+  security = "";
+
+  currentStation = null;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    if (localStorage.getItem("authenticated") === "true")
-      this.router.navigate(["/user"]);
+    if (localStorage.getItem('station')) {
+      this.currentStation = localStorage.getItem('station');
+    } else {
+      this.currentStation = 'Please select a station in the admin area';
+    }
   }
 
   authenticate() {
     console.log("login")
-    if (this.users[this.username] === this.password) {
+    if (this.users[this.security]) {
       this.router.navigate(["/user"]);
     } else {
       alert("Good guess, but ... No!");

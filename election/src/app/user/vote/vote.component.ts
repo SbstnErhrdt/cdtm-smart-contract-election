@@ -76,13 +76,14 @@ export class VoteComponent implements OnInit {
     this.web3Service.artifactsToContract(election_artifacts)
       .then((ElectionAbstraction) => {
         ElectionAbstraction.deployed().then(function (instance) {
-          return instance.vote(id, that.web3Service.web3.utils.fromAscii(r), { from: localStorage.getItem('account') });
+          return instance.vote(id, that.web3Service.web3.utils.asciiToHex(r), { from: localStorage.getItem('account') });
         }).then(function (result) {
           console.log('RES', result);
           if (result) {
             that.result = {};
             that.result['candidate'] = candidate;
             that.result['hash'] = that.ENDPOINT + r;
+            that.result['link'] = '/check/' + r;
           }
         }).catch(function (err) {
           console.error(err);

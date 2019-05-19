@@ -44,21 +44,21 @@ export class CheckComponent implements OnInit {
         this.Election.deployed()
           .then(deployed => {
             console.log('dep', deployed);
-            const hashEncoded = this.web3Service.web3.utils.fromAscii(hash);
-            console.log("lalala", hashEncoded);
 
             ////deployed.hash2candidateId.call().then((res) => {
             //  console.log(res);
             //});
 
-            deployed.getVoteCandidate(hashEncoded).then((candidate) => {
-              console.log("aaa",candidate)
+            deployed.getVoteCandidate(this.web3Service.web3.utils.asciiToHex(hash)).then((candidate) => {
+              console.log("aaa",candidate);
               // append the candidates
               this.candidate = {
                 id: candidate[0].toNumber(),
                 name: candidate[1],
                 party: candidate[2],
               };
+            }).catch(function (err) {
+              console.error(err);
             });
             
             

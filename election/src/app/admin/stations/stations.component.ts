@@ -11,10 +11,12 @@ const election_artifacts = require('../../../../build/contracts/Election.json');
 export class StationsComponent implements OnInit {
 
   Election: any;
-  
+
   account = null;
 
   stations = null;
+
+  currentStation = null;
 
   images = [
     "https://images.pexels.com/photos/2159549/pexels-photo-2159549.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
@@ -64,6 +66,12 @@ export class StationsComponent implements OnInit {
       });
   }
 
+  getStation() {
+    if (localStorage.getItem('station')) {
+      this.currentStation = localStorage.getItem('station');
+    }
+  }
+
   loadStations(candidatesCount) {
     this.stations = [];
 
@@ -91,13 +99,16 @@ export class StationsComponent implements OnInit {
   }
 
 
-  selectStation(id) {
+  selectStation(id, station) {
+    const that = this;
     this.web3Service.artifactsToContract(election_artifacts)
       .then((ElectionAbstraction) => {
         ElectionAbstraction.deployed().then(function (instance) {
           return instance.assignAddressToStation(id, { from: localStorage.getItem('account') });
         }).then(function (result) {
-          console.log(result)
+          console.log(result);
+          localStorage.setItem('station', station.name);
+          that.getStation();
           // Wait for votes to update
         }).catch(function (err) {
           console.error(err);

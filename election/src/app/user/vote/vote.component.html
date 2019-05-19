@@ -1,6 +1,7 @@
 <div class="row justify-content-center">
   <div class="col-md-8 col-sm-8 col-lg-5" style="padding-top:100px;">
 
+    <h1>Please vote for your candidate</h1>
 
       <div class="row">
           <div class="col-sm-6" *ngFor="let c of candidates">
@@ -20,7 +21,6 @@
           </div>
         </div>
 
-
   </div>
 </div>
 
@@ -28,7 +28,9 @@
 <div *ngIf="result" style="position: fixed; top:0; left: 0; right:0; bottom:0; background: rgba(0,0,0,0.8); padding-top: 150px;">
     <div class="row justify-content-center">
       <div style="background:#fff; padding:50px; text-align: center;">
-          {{result.hash}}
+          
+          <a [routerLink]="[result.link]">{{result.hash}}</a>
+
           <qrcode [qrdata]="result.hash" [size]="400" [level]="'M'"></qrcode>
           <br>
           <button class="btn btn-success" (click)="nextVote()">Finish</button>
