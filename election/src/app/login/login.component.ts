@@ -14,7 +14,10 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (localStorage.getItem("authenticated") === "true")
+      this.router.navigate(["/user"]);
+  }
 
   authenticate() {
     console.log("login")

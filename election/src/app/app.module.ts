@@ -16,6 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { Web3Service } from 'src/util/web3.service';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CheckComponent } from './check/check.component';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -31,15 +33,18 @@ import { CheckComponent } from './check/check.component';
     LoginComponent,
     CheckComponent,
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
     QRCodeModule,
-    FormsModule],
+    ChartsModule,
+    FormsModule
+  ],
   providers: [
     Web3Service,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent
+  ],
 })
 export class AppModule { }
