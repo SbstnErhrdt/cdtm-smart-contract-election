@@ -1,3 +1,37 @@
-<p>
-  vote works!
-</p>
+<div class="row justify-content-center">
+  <div class="col-md-8 col-sm-8 col-lg-5" style="padding-top:100px;">
+
+
+      <div class="row">
+          <div class="col-sm-6" *ngFor="let c of candidates">
+            <div style="padding: 10px; border:1px solid #eee;">
+              <img src="/assets/{{c.id}}.jpg" width="80%" alt="{{c.name}}"> <br>
+              <br>
+              <img style="float:left" src="/assets/party-{{c.id}}.png" height="50px" alt="{{c.name}}">
+              <div style="float:left; padding:10px;">
+                <strong>{{c.name}}</strong><br>
+                {{c.party}}
+              </div>
+        
+              <div class="clearfix"></div>
+        
+              <button class="btn btn-success" (click)="vote(c.id, c)">Vote for {{c.name}}</button>
+            </div>
+          </div>
+        </div>
+
+
+  </div>
+</div>
+
+
+<div *ngIf="result" style="position: fixed; top:0; left: 0; right:0; bottom:0; background: rgba(0,0,0,0.8); padding-top: 150px;">
+    <div class="row justify-content-center">
+      <div style="background:#fff; padding:50px; text-align: center;">
+          {{result.hash}}
+          <qrcode [qrdata]="result.hash" [size]="400" [level]="'M'"></qrcode>
+          <br>
+          <button class="btn btn-success" (click)="nextVote()">Finish</button>
+      </div>
+    </div>
+</div> 

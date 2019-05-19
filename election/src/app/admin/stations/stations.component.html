@@ -5,102 +5,19 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let station of stations">
       <div class="card electoral-card" style="width: 18rem;">
         <img
           class="card-img-top electoral-image"
-          src="https://images.pexels.com/photos/2159549/pexels-photo-2159549.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+          src="{{images[station.id]}}"
           alt="Card image cap"
         />
         <div class="card-body">
-          <h5 class="card-title">Adalar</h5>
-          <p class="card-text">Electoral: 14221</p>
-          <a class="btn btn-primary" [routerLink]="['/admin/stations/Adalar']"
-            >Chose Electoral</a
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card electoral-card" style="width: 18rem;">
-        <img
-          class="card-img-top electoral-image"
-          src="https://images.pexels.com/photos/1549326/pexels-photo-1549326.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Arnavutkoey</h5>
-          <p class="card-text">Electoral: 180080</p>
-          <a
-            class="btn btn-primary"
-            [routerLink]="['/admin/stations/Arnavutkoey']"
-            >Chose Electoral</a
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card electoral-card" style="width: 18rem;">
-        <img
-          class="card-img-top electoral-image"
-          src="https://images.pexels.com/photos/1666362/pexels-photo-1666362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Avcılar</h5>
-          <p class="card-text">Electoral: 14221</p>
-          <a class="btn btn-primary" [routerLink]="['/admin/stations/Avcılar']"
-            >Chose Electoral</a
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card electoral-card" style="width: 18rem;">
-        <img
-          class="card-img-top electoral-image"
-          src="https://images.pexels.com/photos/57553/pexels-photo-57553.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Bağcılar</h5>
-          <p class="card-text">Electoral: 738809</p>
-          <a class="btn btn-primary" [routerLink]="['/admin/stations/Bağcılar']"
-            >Chose Electoral</a
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card electoral-card" style="width: 18rem;">
-        <img
-          class="card-img-top electoral-image"
-          src="https://images.pexels.com/photos/45189/pexels-photo-45189.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Bahçelievler</h5>
-          <p class="card-text">Electoral: 590063</p>
-          <a
-            class="btn btn-primary"
-            [routerLink]="['/admin/stations/Bahçelievler']"
-            >Chose Electoral</a
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card electoral-card" style="width: 18rem;">
-        <img
-          class="card-img-top electoral-image"
-          src="https://images.pexels.com/photos/2216275/pexels-photo-2216275.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Bakırköy</h5>
-          <p class="card-text">Electoral: 219145</p>
-          <a class="btn btn-primary" [routerLink]="['/admin/stations/Bakırköy']"
-            >Chose Electoral</a
+          <h5 class="card-title">{{station.name}}</h5>
+          <p class="card-text">Electoral: {{station.amountOfEligibleVoters}}</p>
+          <button class="btn btn-primary" 
+          (click)="selectStation(station.id)"
+            >Select Station</button
           >
         </div>
       </div>

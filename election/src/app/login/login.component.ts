@@ -20,10 +20,11 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
+    console.log("login")
     if (this.users[this.username] === this.password) {
-      console.log("here");
-      localStorage.setItem("authenticated", "true");
       this.router.navigate(["/user"]);
-    } else alert("Good guess, but ... No!");
+    } else {
+      alert("Good guess, but ... No!");
+    }
   }
 }

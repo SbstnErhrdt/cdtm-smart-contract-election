@@ -9,9 +9,11 @@ import { VoteComponent } from "./user/vote/vote.component";
 import { ConfirmComponent } from "./user/confirm/confirm.component";
 import { LoginComponent } from "./login/login.component";
 import { ResultsComponent } from "./admin/results/results.component";
+import { CheckComponent } from './check/check.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
+  { path: "check/:hash", component: CheckComponent },
   {
     path: "admin",
     component: AdminComponent,

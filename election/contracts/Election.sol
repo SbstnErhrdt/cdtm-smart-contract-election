@@ -26,18 +26,18 @@ contract Election {
     mapping(address => PollingStation) public address2pollingStation;
 
     // hash2candidateID
-    mapping(string => uint) public hash2candidateId;
+    mapping(bytes32 => uint) public hash2candidateId;
 
     // Store Candidates Count
     uint public candidatesCount;
 
     // Store Stations Count
-    uint public id2pollingStationsCount;
+    uint public pollingStationsCount;
 
     // voted event
     event votedEvent (
         uint indexed _candidateId,
-        string indexed _rand
+        bytes32 indexed _hash
     );
 
     // Constructor
@@ -82,14 +82,14 @@ contract Election {
 
     // Add a polling station to the election
     function addStation (string memory _name, uint _amountOfEligibleVoters) private {
-        id2pollingStationsCount ++;
+        pollingStationsCount ++;
         PollingStation memory station;
         station.id = candidatesCount;
         station.name = _name;
         station.amountOfEligibleVoters = _amountOfEligibleVoters;
         station.voteCount = 0;
         // Add the polling stations to the mapping
-        id2pollingStations[id2pollingStationsCount] = station;
+        id2pollingStations[pollingStationsCount] = station;
     }
 
     // Add a polling station to the election
@@ -98,8 +98,25 @@ contract Election {
         address2pollingStation[msg.sender] = id2pollingStations[_stationID];
     }
 
-    function getVote(string memory _hash) public {
-        //address2pollingStation[msg.sender] = id2pollingStations[_stationID];
+    function getStation(uint _id) public view returns(uint id, string memory name, uint amountOfEligibleVoters) {
+        PollingStation memory station;
+        station = id2pollingStations[_id];
+        id = _id;
+        name = station.name;
+        amountOfEligibleVoters = station.amountOfEligibleVoters;
+    }
+
+    function getCandidate(uint _id) public view returns(uint id, string memory name, string memory party){
+        Candidate memory candidate;
+        candidate = id2candidates[_id];
+        id = _id;
+        name = candidate.name;
+        party = candidate.party;
+    }
+
+    function getVoteCandidate(bytes24 _hash) public view returns(uint id, string memory name, string memory party){
+        uint candidateId = hash2candidateId[_hash];
+        (id, name, party) = getCandidate(candidateId);
     }
 
     // TODO
@@ -108,7 +125,7 @@ contract Election {
     //}
 
     // Execute the vote
-    function vote (uint _candidateId, string memory _rand) public {
+    function vote (uint _candidateId, bytes32 _hash) public {
         // require that they haven't voted before
         // require(voters[msg.sender]==false);
 
@@ -122,12 +139,12 @@ contract Election {
         require(station.voteCount < station.amountOfEligibleVoters, "The amount of votes exeed the max votes");
 
         // record that voter has voted for a candidate
-        hash2candidateId[_rand] = _candidateId;
+        hash2candidateId[_hash] = _candidateId;
 
         // update candidate vote Count
         id2candidates[_candidateId].voteCount ++;
 
         // trigger voted event
-        emit votedEvent(_candidateId, _rand);
+        emit votedEvent(_candidateId, _hash);
     }
 }
